@@ -14,13 +14,13 @@ public class KafkaProperties {
 
     @Data
     public static class Consumer {
-        private String topicParsed = "parsed_event";
-        private String topicRaw = "rawlog";
+        private String topicEvent = "processed_logs";
         private String groupId = "distributor-group";
     }
 
     @Data
     public static class Producer {
-        private String finalDestination = "final_output_topic";
+        private String parsedTopic = "parsed_event";
+        private String rawLog = "rawlog";
     }
 }

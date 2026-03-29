@@ -2,8 +2,6 @@ spring:
   kafka:
     bootstrap-servers: localhost:9092
     consumer:
-      topic-parsed: parsed_event
-      topic-raw: rawlog
       group-id: distributor-service-v1
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer

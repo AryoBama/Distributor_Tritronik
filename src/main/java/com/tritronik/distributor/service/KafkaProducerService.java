@@ -19,14 +19,17 @@ public class KafkaProducerService {
 
     public void distribute(ParsedEvent event) {
         if (event.getOutput() != null && event.getOutput().contains("parsed_event")) {
-            String targetTopic = kafkaProperties.getProducer().getFinalDestination();
+            String targetTopic = kafkaProperties.getProducer().getParsedTopic();
             
             String key = event.getImei(); 
             
             log.info("Mendistribusikan data IMEI {} ke {}", key, targetTopic);
             kafkaTemplate.send(targetTopic, key, event);
-        } else {
-            log.warn("Data dengan IMEI {} tidak memiliki instruksi output 'parsed_event'", event.getImei());
+        } else if(event.getOutput() != null && event.getOutput().contains("rawlog")){
+            String rawTopic = kafkaProperties.getProducer().getRawLog();
+            log.warn("Meneruskan ke RAW_LOG_ERROR topic");
+            kafkaTemplate.send(rawTopic, event);
+
         }
     }
 }

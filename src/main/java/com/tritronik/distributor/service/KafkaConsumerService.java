@@ -16,7 +16,7 @@ public class KafkaConsumerService {
     private final KafkaProducerService kafkaProducerService;
 
     @KafkaListener(
-        topics = "#{kafkaProperties.consumer.topicParsed}", 
+        topics = "#{kafkaProperties.consumer.topicEvent}", 
         groupId = "#{kafkaProperties.consumer.groupId}"
     )
     public void consumeParsed(ParsedEvent event) {
@@ -25,11 +25,4 @@ public class KafkaConsumerService {
         kafkaProducerService.distribute(event);
     }
 
-    @KafkaListener(
-        topics = "#{kafkaProperties.consumer.topicRaw}", 
-        groupId = "#{kafkaProperties.consumer.groupId}"
-    )
-    public void consumeRaw(String rawData) {
-        log.warn("Distributor menerima data mentah (fail-parse): {}", rawData);
-    }
 }
